@@ -1,6 +1,7 @@
 import pygame as pg
 #import constants as c
 from .constants import *
+from .enemy import Enemy
 
 def start_game():
   #initialise pygame
@@ -13,11 +14,37 @@ def start_game():
   screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
   pg.display.set_caption("Tower Defense")
 
+  #load images
+  enemy_image = pg.image.load('tower/assets/images/enemies/enemy_1.png').convert_alpha()
+
+  #create groups
+  enemy_group = pg.sprite.Group()
+
+  waypoints = [
+    (100, 100),
+    (400, 200),
+    (400, 100),
+    (200, 300)
+  ]
+  enemy = Enemy(waypoints, enemy_image)
+  enemy_group.add(enemy)
+
   #game loop
   run = True
   while run:
 
     clock.tick(FPS)
+
+    screen.fill("grey100")
+
+    #draw enemy path
+    pg.draw.lines(screen, "grey0", False, waypoints)
+
+    #update groups
+    enemy_group.update()
+
+    #draw groups
+    enemy_group.draw(screen)
 
     #event handler
     for event in pg.event.get():
@@ -25,10 +52,13 @@ def start_game():
       if event.type == pg.QUIT:
         run = False
 
+    #update display
+    pg.display.flip()
+
   pg.quit()
 
 def main():
   start_game()
-  
+
 if __name__ == "__main__":
     main()
