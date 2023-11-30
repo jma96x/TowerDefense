@@ -1,7 +1,6 @@
 import pygame as pg
-#import constants as c
-from .constants import *
-from .enemy import Enemy
+from .utils.constants import Constants as c
+from .utils.enemy import Enemy
 
 def start_game():
   #initialise pygame
@@ -11,7 +10,7 @@ def start_game():
   clock = pg.time.Clock()
 
   #create game window
-  screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+  screen = pg.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
   pg.display.set_caption("Tower Defense")
 
   #load images
@@ -33,7 +32,7 @@ def start_game():
   run = True
   while run:
 
-    clock.tick(FPS)
+    clock.tick(c.FPS)
 
     screen.fill("grey100")
 
